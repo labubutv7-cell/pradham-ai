@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+
 <title>Pradham AI Receptionist</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/vapi.js"></script>
+<!-- Correct Vapi Browser SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/browser/vapi.min.js"></script>
 
 <style>
 body{
@@ -25,7 +26,7 @@ cursor:pointer;
 }
 
 button:hover{
-background:#174fd6;
+background:#1a5edb;
 }
 
 .status{
@@ -50,22 +51,22 @@ font-size:18px;
 const PUBLIC_KEY = "pk_live_0c50737e-9511-4940-b17c-751796162c53";
 const ASSISTANT_ID = "57d1edf4-c6c3-4f6c-a024-01255dc43a72";
 
+const vapi = new Vapi(PUBLIC_KEY);
+
 const button = document.getElementById("talkBtn");
 const status = document.getElementById("status");
-
-const vapi = new Vapi(PUBLIC_KEY);
 
 button.onclick = async () => {
 
 status.innerText = "Status: Connecting...";
 
-try{
+try {
 
 await vapi.start(ASSISTANT_ID);
 
 status.innerText = "Status: Connected. Speak now.";
 
-}catch(err){
+} catch (err) {
 
 console.error(err);
 status.innerText = "Status: Error connecting";
