@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/vapi.min.js"></script>
 
 <style>
+
 body{
 font-family: Arial;
 text-align:center;
@@ -31,9 +32,10 @@ background:#174fd6;
 
 .status{
 margin-top:20px;
-font-size:16px;
+font-size:18px;
 color:#333;
 }
+
 </style>
 
 </head>
@@ -41,6 +43,7 @@ color:#333;
 <body>
 
 <h1>Welcome to Pradham AI</h1>
+
 <p>Click the button to talk to the AI receptionist.</p>
 
 <button id="talkBtn">🎤 Talk to AI Receptionist</button>
@@ -53,34 +56,38 @@ const PUBLIC_KEY = "pk_live_0c50737e-9511-4940-b17c-751796162c53";
 const ASSISTANT_ID = "57d1edf4-c6c3-4f6c-a024-01255dc43a72";
 
 const status = document.getElementById("status");
+const button = document.getElementById("talkBtn");
 
 console.log("Loading Vapi...");
 
-const vapi = new Vapi(PUBLIC_KEY);
+const vapi = new window.Vapi(PUBLIC_KEY);
 
-document.getElementById("talkBtn").onclick = async () => {
+button.addEventListener("click", async () => {
 
-try{
+console.log("Button clicked");
 
 status.innerText = "Status: Starting assistant...";
+
+try {
 
 await vapi.start(ASSISTANT_ID);
 
 status.innerText = "Status: Connected. Speak now.";
 
-console.log("Assistant started successfully");
+console.log("Assistant started");
 
-}catch(error){
+} catch (error) {
 
-console.error("Error starting assistant:", error);
+console.error("Assistant error:", error);
 
-status.innerText = "Error starting assistant. Check console.";
+status.innerText = "Status: Error starting assistant";
 
 }
 
-};
+});
 
 </script>
 
 </body>
+
 </html>
