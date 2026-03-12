@@ -4,10 +4,11 @@
 
 <title>Pradham AI Receptionist</title>
 
-<!-- Correct Vapi Browser SDK -->
+<!-- Vapi Browser SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/browser/vapi.min.js"></script>
 
 <style>
+
 body{
 font-family: Arial;
 text-align:center;
@@ -33,6 +34,7 @@ background:#1a5edb;
 margin-top:20px;
 font-size:18px;
 }
+
 </style>
 
 </head>
@@ -48,32 +50,54 @@ font-size:18px;
 
 <script>
 
+window.addEventListener("load", function(){
+
+console.log("Page loaded");
+
 const PUBLIC_KEY = "pk_live_0c50737e-9511-4940-b17c-751796162c53";
 const ASSISTANT_ID = "57d1edf4-c6c3-4f6c-a024-01255dc43a72";
-
-const vapi = new Vapi(PUBLIC_KEY);
 
 const button = document.getElementById("talkBtn");
 const status = document.getElementById("status");
 
+if(typeof Vapi === "undefined"){
+
+console.error("Vapi SDK failed to load");
+status.innerText = "Status: SDK failed to load";
+
+return;
+
+}
+
+console.log("Vapi SDK loaded");
+
+const vapi = new Vapi(PUBLIC_KEY);
+
 button.onclick = async () => {
+
+console.log("Starting assistant");
 
 status.innerText = "Status: Connecting...";
 
-try {
+try{
 
 await vapi.start(ASSISTANT_ID);
 
 status.innerText = "Status: Connected. Speak now.";
 
-} catch (err) {
+console.log("Assistant connected");
 
-console.error(err);
-status.innerText = "Status: Error connecting";
+}catch(error){
+
+console.error("Connection error:", error);
+
+status.innerText = "Status: Connection failed";
 
 }
 
 };
+
+});
 
 </script>
 
