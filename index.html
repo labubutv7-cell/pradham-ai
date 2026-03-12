@@ -3,7 +3,7 @@
 <head>
 <title>Pradham AI Receptionist</title>
 
-<script src="https://unpkg.com/@vapi-ai/web/dist/vapi.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/index.js"></script>
 
 <style>
 body{
@@ -39,26 +39,11 @@ background:#1c5edb;
 
 <script>
 
-window.addEventListener("load", () => {
-
 const vapi = new Vapi("pk_live_0c50737e-9511-4940-b17c-751796162c53");
 
-const button = document.getElementById("talkBtn");
-
-button.onclick = async () => {
-
-try{
-await vapi.start("57d1edf4-c6c3-4f6c-a024-01255dc43a72");
-console.log("Assistant started");
-}
-catch(err){
-console.error("Error starting assistant:", err);
-alert("Voice failed to start. Check console.");
-}
-
+document.getElementById("talkBtn").onclick = () => {
+  vapi.start("57d1edf4-c6c3-4f6c-a024-01255dc43a72");
 };
-
-});
 
 </script>
 
