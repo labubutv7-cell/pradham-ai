@@ -1,56 +1,50 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<title>Pradham AI Receptionist</title>
+  <meta charset="UTF-8">
+  <title>Pradham AI Receptionist</title>
 
-<!-- Correct Vapi Browser SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/vapi.min.js"></script>
+  <style>
+    body{
+      font-family: Arial;
+      text-align:center;
+      margin-top:120px;
+      background:#f4f4f4;
+    }
 
-<style>
+    button{
+      padding:18px 40px;
+      font-size:20px;
+      border:none;
+      border-radius:10px;
+      background:#2b7cff;
+      color:white;
+      cursor:pointer;
+    }
 
-body{
-font-family: Arial;
-text-align:center;
-margin-top:120px;
-background:#f4f4f4;
-}
+    button:hover{
+      background:#174fd6;
+    }
 
-button{
-padding:18px 40px;
-font-size:20px;
-border:none;
-border-radius:10px;
-background:#2b7cff;
-color:white;
-cursor:pointer;
-}
-
-button:hover{
-background:#174fd6;
-}
-
-.status{
-margin-top:20px;
-font-size:18px;
-color:#333;
-}
-
-</style>
-
+    .status{
+      margin-top:20px;
+      font-size:18px;
+      color:#333;
+    }
+  </style>
 </head>
 
 <body>
 
 <h1>Welcome to Pradham AI</h1>
-
 <p>Click the button to talk to the AI receptionist.</p>
 
 <button id="talkBtn">🎤 Talk to AI Receptionist</button>
-
 <div class="status" id="status">Status: Idle</div>
 
-<script>
+<script type="module">
+
+import Vapi from "https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/+esm";
 
 const PUBLIC_KEY = "pk_live_0c50737e-9511-4940-b17c-751796162c53";
 const ASSISTANT_ID = "57d1edf4-c6c3-4f6c-a024-01255dc43a72";
@@ -58,36 +52,30 @@ const ASSISTANT_ID = "57d1edf4-c6c3-4f6c-a024-01255dc43a72";
 const status = document.getElementById("status");
 const button = document.getElementById("talkBtn");
 
-console.log("Loading Vapi...");
+console.log("Vapi module loaded");
 
-const vapi = new window.Vapi(PUBLIC_KEY);
+const vapi = new Vapi(PUBLIC_KEY);
 
 button.addEventListener("click", async () => {
 
-console.log("Button clicked");
+  status.innerText = "Status: Starting assistant...";
 
-status.innerText = "Status: Starting assistant...";
+  try {
 
-try {
+    await vapi.start(ASSISTANT_ID);
 
-await vapi.start(ASSISTANT_ID);
+    status.innerText = "Status: Connected. Speak now.";
 
-status.innerText = "Status: Connected. Speak now.";
+  } catch (error) {
 
-console.log("Assistant started");
+    console.error(error);
+    status.innerText = "Status: Error starting assistant";
 
-} catch (error) {
-
-console.error("Assistant error:", error);
-
-status.innerText = "Status: Error starting assistant";
-
-}
+  }
 
 });
 
 </script>
 
 </body>
-
 </html>
