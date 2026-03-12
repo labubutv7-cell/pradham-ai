@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>Pradham AI Receptionist</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/index.js"></script>
+<!-- Correct Vapi Browser SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/vapi.min.js"></script>
 
 <style>
 body{
@@ -14,17 +16,23 @@ background:#f4f4f4;
 }
 
 button{
-padding:16px 35px;
-font-size:18px;
+padding:18px 40px;
+font-size:20px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 background:#2b7cff;
 color:white;
 cursor:pointer;
 }
 
 button:hover{
-background:#1c5edb;
+background:#174fd6;
+}
+
+.status{
+margin-top:20px;
+font-size:16px;
+color:#333;
 }
 </style>
 
@@ -37,12 +45,39 @@ background:#1c5edb;
 
 <button id="talkBtn">🎤 Talk to AI Receptionist</button>
 
+<div class="status" id="status">Status: Idle</div>
+
 <script>
 
-const vapi = new Vapi("pk_live_0c50737e-9511-4940-b17c-751796162c53");
+const PUBLIC_KEY = "pk_live_0c50737e-9511-4940-b17c-751796162c53";
+const ASSISTANT_ID = "57d1edf4-c6c3-4f6c-a024-01255dc43a72";
 
-document.getElementById("talkBtn").onclick = () => {
-  vapi.start("57d1edf4-c6c3-4f6c-a024-01255dc43a72");
+const status = document.getElementById("status");
+
+console.log("Loading Vapi...");
+
+const vapi = new Vapi(PUBLIC_KEY);
+
+document.getElementById("talkBtn").onclick = async () => {
+
+try{
+
+status.innerText = "Status: Starting assistant...";
+
+await vapi.start(ASSISTANT_ID);
+
+status.innerText = "Status: Connected. Speak now.";
+
+console.log("Assistant started successfully");
+
+}catch(error){
+
+console.error("Error starting assistant:", error);
+
+status.innerText = "Error starting assistant. Check console.";
+
+}
+
 };
 
 </script>
