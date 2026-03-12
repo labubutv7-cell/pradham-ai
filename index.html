@@ -2,6 +2,32 @@
 <html>
 <head>
 <title>Pradham AI Receptionist</title>
+
+<script src="https://unpkg.com/@vapi-ai/web/dist/vapi.js"></script>
+
+<style>
+body {
+font-family: Arial;
+text-align: center;
+margin-top: 100px;
+background: #f4f4f4;
+}
+
+button {
+padding: 15px 30px;
+font-size: 18px;
+border-radius: 8px;
+border: none;
+background: #2b7cff;
+color: white;
+cursor: pointer;
+}
+
+button:hover {
+background: #1a5edb;
+}
+</style>
+
 </head>
 
 <body>
@@ -11,14 +37,16 @@
 
 <button id="talkBtn">🎤 Talk to AI Receptionist</button>
 
-<script src="https://unpkg.com/@vapi-ai/web/dist/vapi.js"></script>
-
 <script>
-const vapi = new Vapi("0c50737e-9511-4940-b17c-751796162c53");
 
-document.getElementById("talkBtn").onclick = () => {
+const vapi = new Vapi("pk_live_0c50737e-9511-4940-b17c-751796162c53");
+
+const button = document.getElementById("talkBtn");
+
+button.addEventListener("click", () => {
   vapi.start("57d1edf4-c6c3-4f6c-a024-01255dc43a72");
-};
+});
+
 </script>
 
 </body>
