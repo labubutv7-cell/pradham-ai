@@ -1,11 +1,9 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
-
 <title>Pradham AI Receptionist</title>
-
-<!-- Official Vapi Loader -->
-<script src="https://unpkg.com/@vapi-ai/web/dist/vapi.js"></script>
 
 <style>
 body{
@@ -46,7 +44,9 @@ font-size:18px;
 
 <div class="status" id="status">Status: Idle</div>
 
-<script>
+<script type="module">
+
+import Vapi from "https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/index.js";
 
 const PUBLIC_KEY = "pk_live_0c50737e-9511-4940-b17c-751796162c53";
 const ASSISTANT_ID = "57d1edf4-c6c3-4f6c-a024-01255dc43a72";
@@ -54,36 +54,29 @@ const ASSISTANT_ID = "57d1edf4-c6c3-4f6c-a024-01255dc43a72";
 const button = document.getElementById("talkBtn");
 const status = document.getElementById("status");
 
-if(typeof Vapi === "undefined"){
-    console.error("Vapi failed to load");
-    status.innerText = "Status: SDK failed to load";
-}else{
+console.log("Loading Vapi...");
 
-    console.log("Vapi loaded successfully");
+const vapi = new Vapi(PUBLIC_KEY);
 
-    const vapi = new Vapi(PUBLIC_KEY);
+button.onclick = async () => {
 
-    button.onclick = async () => {
+status.innerText = "Status: Connecting...";
 
-        status.innerText = "Status: Connecting...";
+try{
 
-        try{
+await vapi.start(ASSISTANT_ID);
 
-            await vapi.start(ASSISTANT_ID);
+status.innerText = "Status: Connected. Speak now.";
 
-            status.innerText = "Status: Connected. Speak now.";
+}catch(error){
 
-        }catch(error){
+console.error(error);
 
-            console.error(error);
-
-            status.innerText = "Status: Connection failed";
-
-        }
-
-    };
+status.innerText = "Status: Connection failed";
 
 }
+
+};
 
 </script>
 
